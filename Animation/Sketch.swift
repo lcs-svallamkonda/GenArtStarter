@@ -5,13 +5,11 @@ class Sketch : NSObject {
     
     // NOTE: Every sketch must contain an object of type Canvas named 'canvas'
     //       Therefore, the line immediately below must always be present.
-    let canvas : Canvas
+    let canvas: Canvas
     
-    // Agent centre point
-    var centre: Point
-    let radius: Int
-    var velocity: Vector
-    
+    // Create an agent
+    var someAgent: Agent
+        
     // This function runs once
     override init() {
         
@@ -22,10 +20,11 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Define properties of the agent
-        centre = Point(x: canvas.width / 2, y: canvas.height / 2) // Centre of screen
-        velocity = Vector(x: Double.random(in: -2...2),
-                          y: Double.random(in: -2...2))              // Some direction
-        radius = 20
+        someAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
+                          radius: 20,
+                          velocity: Vector(x: Double.random(in: -2...2),
+                                           y: Double.random(in: -2...2)),
+                          drawsUpon: canvas)
         
     }
     
@@ -35,15 +34,8 @@ class Sketch : NSObject {
         // Clear the canvas
         clearCanvas()
         
-        // Move the circle
-        centre = Point(x: centre.x + velocity.x,
-                       y: centre.y + velocity.y)
-        
-        // Bounce at edges
-        bounceAtEdge()
-        
-        // Draw a circle at this point
-        canvas.drawEllipse(at: centre, width: radius * 2, height: radius * 2)
+        // Update the position of the agent
+        someAgent.update()
         
     }
     
@@ -57,22 +49,6 @@ class Sketch : NSObject {
         canvas.drawRectangle(at: Point(x: 0, y: 0), width: canvas.width, height: canvas.height)
         canvas.drawShapesWithFill = false
         canvas.drawShapesWithBorders = true
-        
-    }
-    
-    // Bounce the agent when it hit's an edge
-    func bounceAtEdge() {
-        
-        // Bounce at left and right edges
-        if centre.x + CGFloat(radius) > CGFloat(canvas.width) || centre.x - CGFloat(radius) < 0 {
-            velocity.x *= -1
-        }
-        
-        // Bounce at top and bottom of scren
-        if centre.y + CGFloat(radius) > CGFloat(canvas.height) || centre.y - CGFloat(radius) < 0 {
-            velocity.y *= -1
-        }
-
         
     }
     
