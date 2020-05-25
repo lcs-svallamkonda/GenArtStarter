@@ -14,7 +14,7 @@ class Sketch : NSObject {
     override init() {
         
         // Create canvas object – specify size
-        canvas = Canvas(width: 500, height: 500)
+        canvas = Canvas(width: 700, height: 700)
         
         // No fill on canvas
         canvas.drawShapesWithFill = false
@@ -32,12 +32,11 @@ class Sketch : NSObject {
             
         }
         
-        
     }
     
     // This function runs repeatedly, forever, to create the animated effect
     func draw() {
-        
+       
         // Clear the canvas
         clearCanvas()
         
@@ -60,5 +59,5 @@ class Sketch : NSObject {
         canvas.drawShapesWithBorders = true
         
     }
-    
+   
 }
