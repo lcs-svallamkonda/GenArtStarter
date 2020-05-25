@@ -17,24 +17,26 @@ class Sketch : NSObject {
     let startingRadius: CGFloat = 60
     
     // Parameters to control spread of sine wave used to rotate polygons
-    let amplitude: CGFloat = 10
-    let horizontalScaling: CGFloat = 0.5
+    let amplitude: CGFloat = 5
+    let horizontalScaling: CGFloat = 3
     
     // A bit of randomness so that each time the drawing is made, it looks a bit different
-    let noiseFactor = CGFloat.random(in: -100...100) / 10.0
+    let noiseFactor = CGFloat.random(in: -2...2)
 
     // This function runs once
     override init() {
         
         // Create canvas object – specify size
-        canvas = Canvas(width: 500, height: 500)
+        canvas = Canvas(width: 700, height: 700)
         
         // Create turtle to draw with
         turtle = Tortoise(drawingUpon: canvas)
                 
         // Animate slowly
-        canvas.framesPerSecond = 1
+        canvas.framesPerSecond = 10
         
+        // What is the noise factor?
+        print("Noise factor is \(noiseFactor)")
 
     }
     
@@ -50,8 +52,13 @@ class Sketch : NSObject {
             // Grow the radius a bit each time, so the next pentagon is a bit bigger
             let currentRadius = startingRadius + CGFloat(canvas.frameCount) * 6.0
 
+            // Set the rotation of the polygon
+            let currentAmplitude = amplitude * noiseFactor
+            let x = CGFloat(canvas.frameCount)
+            let currentRotation: Degrees = currentAmplitude * sin(x / horizontalScaling)
+
             // Now actually draw the polygon
-            drawPolygonWith(sideCount: 5, centrePoint: Point(x: 250, y: 250), radius: currentRadius, rotation: 0)
+            drawPolygonWith(sideCount: 5, centrePoint: Point(x: canvas.width / 2, y: canvas.height / 2), radius: currentRadius, rotation: currentRotation)
 
         }
 
@@ -68,8 +75,8 @@ class Sketch : NSObject {
         for n in 0...sideCount {
             
             // NOTE: Based on details provided here https://stackoverflow.com/questions/7198144/how-to-draw-a-n-sided-regular-polygon-in-cartesian-coordinates#7198179
-            let xPartial: CGFloat = cos(2 * CGFloat.pi * CGFloat(n) / CGFloat(sideCount) + rotation)
-            let yPartial: CGFloat = sin(2 * CGFloat.pi * CGFloat(n) / CGFloat(sideCount) + rotation)
+            let xPartial: CGFloat = cos(2 * CGFloat.pi * CGFloat(n) / CGFloat(sideCount) + rotation.asRadians())
+            let yPartial: CGFloat = sin(2 * CGFloat.pi * CGFloat(n) / CGFloat(sideCount) + rotation.asRadians())
             
             let nextX = radius * xPartial + centrePoint.x
             let nextY = radius * yPartial + centrePoint.y
