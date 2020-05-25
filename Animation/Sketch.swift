@@ -10,7 +10,7 @@ class Sketch : NSObject {
     // Agent centre point
     var centre: Point
     let radius: Int
-    let velocity: Vector
+    var velocity: Vector
     
     // This function runs once
     override init() {
@@ -39,6 +39,9 @@ class Sketch : NSObject {
         centre = Point(x: centre.x + velocity.x,
                        y: centre.y + velocity.y)
         
+        // Bounce at edges
+        bounceAtEdge()
+        
         // Draw a circle at this point
         canvas.drawEllipse(at: centre, width: radius * 2, height: radius * 2)
         
@@ -54,6 +57,22 @@ class Sketch : NSObject {
         canvas.drawRectangle(at: Point(x: 0, y: 0), width: canvas.width, height: canvas.height)
         canvas.drawShapesWithFill = false
         canvas.drawShapesWithBorders = true
+        
+    }
+    
+    // Bounce the agent when it hit's an edge
+    func bounceAtEdge() {
+        
+        // Bounce at left and right edges
+        if centre.x + CGFloat(radius) > CGFloat(canvas.width) || centre.x - CGFloat(radius) < 0 {
+            velocity.x *= -1
+        }
+        
+        // Bounce at top and bottom of scren
+        if centre.y + CGFloat(radius) > CGFloat(canvas.height) || centre.y - CGFloat(radius) < 0 {
+            velocity.y *= -1
+        }
+
         
     }
     
