@@ -9,7 +9,7 @@
 import Foundation
 import CanvasGraphics
 
-struct Agent {
+class Agent {
 
     // Agent properties
     var centre: Point
@@ -30,7 +30,7 @@ struct Agent {
     }
     
     // Update position of agent
-    mutating func update() {
+    func update() {
         
         // Move the circle
         centre = Point(x: centre.x + velocity.x,
@@ -45,7 +45,7 @@ struct Agent {
     }
     
     // Bounce the agent when it hit's an edge
-    mutating func bounceAtEdge() {
+    func bounceAtEdge() {
         
         // Bounce at left and right edges
         if centre.x + CGFloat(radius) > CGFloat(c.width) || centre.x - CGFloat(radius) < 0 {
