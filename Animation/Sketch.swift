@@ -8,8 +8,9 @@ class Sketch : NSObject {
     let canvas : Canvas
     
     // Agent centre point
-    let centre: Point
+    var centre: Point
     let radius: Int
+    let velocity: Vector
     
     // This function runs once
     override init() {
@@ -21,16 +22,38 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Define properties of the agent
-        centre = Point(x: canvas.width / 2, y: canvas.height / 2)
+        centre = Point(x: canvas.width / 2, y: canvas.height / 2) // Centre of screen
+        velocity = Vector(x: Double.random(in: -2...2),
+                          y: Double.random(in: -2...2))              // Some direction
         radius = 20
         
     }
     
     // This function runs repeatedly, forever, to create the animated effect
     func draw() {
-
+        
+        // Clear the canvas
+        clearCanvas()
+        
+        // Move the circle
+        centre = Point(x: centre.x + velocity.x,
+                       y: centre.y + velocity.y)
+        
         // Draw a circle at this point
         canvas.drawEllipse(at: centre, width: radius * 2, height: radius * 2)
+        
+    }
+    
+    // Clear the canvas
+    func clearCanvas() {
+        
+        // "Clear" the canvas after each draw
+        canvas.drawShapesWithBorders = false
+        canvas.drawShapesWithFill = true
+        canvas.fillColor = .white
+        canvas.drawRectangle(at: Point(x: 0, y: 0), width: canvas.width, height: canvas.height)
+        canvas.drawShapesWithFill = false
+        canvas.drawShapesWithBorders = true
         
     }
     
