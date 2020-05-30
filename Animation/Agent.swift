@@ -47,14 +47,14 @@ class Agent {
     // Bounce the agent when it hit's an edge
     func bounceAtEdge() {
         
-        // Bounce at left and right edges
-        if centre.x + CGFloat(radius) > CGFloat(c.width) || centre.x - CGFloat(radius) < 0 {
-            velocity.x *= -1
+        // Bounce at "circle" edges
+        if centre.x + CGFloat(radius) > CGFloat((c.width / 2) + 350) || centre.x - CGFloat(radius) < CGFloat((c.width / 2) - 350) {
+            centre.x = CGFloat(c.width / 2)
         }
         
-        // Bounce at top and bottom of scren
-        if centre.y + CGFloat(radius) > CGFloat(c.height) || centre.y - CGFloat(radius) < 0 {
-            velocity.y *= -1
+        // Bounce at "circle" edges
+        if centre.y + CGFloat(radius) > CGFloat((c.height / 2) + 350) || centre.y - CGFloat(radius) < CGFloat((c.height / 2) - 350) {
+            centre.y = CGFloat(c.height / 2)
         }
 
         
