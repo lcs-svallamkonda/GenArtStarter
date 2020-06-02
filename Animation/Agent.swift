@@ -64,9 +64,14 @@ class Agent {
     }
     
     //Returns true when this circle overlaps another cirlce
-    func isOverlapping(this: Agent) {
+    func isOverlapping(this: Agent) -> Bool {
         
         //Two circles are overlapping when the sum of their radii is greater than the distance between their centre points
+        if distanceBetween(a: self.centre, b: this.centre) < CGFloat(self.radius) + CGFloat(this.radius) {
+            return true
+        } else {
+            return false
+        }
         
     }
     
