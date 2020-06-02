@@ -20,7 +20,7 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Create many instances of the Agent structure
-        for _ in 1...75 {
+        for _ in 1...50 {
             
             let anotherAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
                                      radius: Int.random(in: 25...50),
@@ -71,7 +71,10 @@ class Sketch : NSObject {
             //Right side (agent being checked)
             for j in (i + 1)...agents.count - 1 {
                 
-                canvas.lineColor = Color.init(hue: 255, saturation: 100, brightness: 50, alpha: 2)
+                let a = distanceBetween(a: agents[i].centre, b: agents[j].centre)
+//                print(a)
+                //let a = Int.random(in: 1...400)
+                canvas.lineColor = Color.init(hue: Int(a) + 100, saturation: 100, brightness: 50, alpha: 5)
                 if agents[i].isOverlapping(this: agents[j]) {
                     canvas.drawLine(from: agents[i].centre, to: agents[j].centre)
                 }
@@ -90,6 +93,13 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         canvas.drawShapesWithBorders = true
         
+    }
+    
+    //get the distance between one point and another point
+    func distanceBetween(a: Point, b: Point) -> CGFloat {
+        
+        //length of a line segment formula
+        return sqrt( pow(b.x - a.x, 2) + pow(b.y - a.y, 2) )
     }
    
 }
