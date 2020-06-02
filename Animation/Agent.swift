@@ -30,7 +30,7 @@ class Agent {
     }
     
     // Update position of agent
-    func update() {
+    func update(drawingBoundary: Bool) {
         
         // Move the circle
         centre = Point(x: centre.x + velocity.x,
@@ -40,7 +40,10 @@ class Agent {
         bounceAtEdge()
         
         // Draw a circle at this point
-        c.drawEllipse(at: centre, width: radius * 2, height: radius * 2)
+        if drawingBoundary == true {
+            c.drawEllipse(at: centre, width: radius * 2, height: radius * 2)
+        }
+        
         
     }
     
@@ -58,6 +61,20 @@ class Agent {
         }
 
         
+    }
+    
+    //Returns true when this circle overlaps another cirlce
+    func isOverlapping(this: Agent) {
+        
+        //Two circles are overlapping when the sum of their radii is greater than the distance between their centre points
+        
+    }
+    
+//get the distance between one point and another point
+    func distanceBetween(a: Point, b: Point) -> CGFloat {
+        
+        //length of a line segment formula
+        return sqrt( pow(b.x - a.x, 2) + pow(b.y - a.y, 2) )
     }
     
     
