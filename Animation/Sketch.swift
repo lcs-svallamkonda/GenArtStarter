@@ -20,7 +20,7 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Create many instances of the Agent structure
-        for _ in 1...2 {
+        for _ in 1...4 {
             
             let anotherAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
                                      radius: Int.random(in: 25...50),
@@ -48,6 +48,21 @@ class Sketch : NSObject {
         //Manually check for overlap between the two circles
         if agents[0].isOverlapping(this: agents[1]) {
             canvas.drawLine(from: agents[0].centre, to: agents[1].centre)
+        }
+        if agents[0].isOverlapping(this: agents[2]) {
+            canvas.drawLine(from: agents[0].centre, to: agents[2].centre)
+        }
+        if agents[0].isOverlapping(this: agents[3]) {
+            canvas.drawLine(from: agents[0].centre, to: agents[3].centre)
+        }
+        if agents[1].isOverlapping(this: agents[2]) {
+            canvas.drawLine(from: agents[1].centre, to: agents[2].centre)
+        }
+        if agents[1].isOverlapping(this: agents[3]) {
+            canvas.drawLine(from: agents[1].centre, to: agents[3].centre)
+        }
+        if agents[2].isOverlapping(this: agents[3]) {
+            canvas.drawLine(from: agents[2].centre, to: agents[3].centre)
         }
         
     }
