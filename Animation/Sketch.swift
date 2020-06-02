@@ -20,7 +20,7 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Create many instances of the Agent structure
-        for _ in 1...4 {
+        for _ in 1...75 {
             
             let anotherAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
                                      radius: Int.random(in: 25...50),
@@ -38,33 +38,45 @@ class Sketch : NSObject {
     func draw() {
        
         // Clear the canvas
-       // clearCanvas()
+//        clearCanvas()
         
         // Update the position of the agent
         for agent in agents {
             agent.update(drawingBoundary: false)
         }
         
-        //Manually check for overlap between the two circles
-        if agents[0].isOverlapping(this: agents[1]) {
-            canvas.drawLine(from: agents[0].centre, to: agents[1].centre)
+//        //Manually check for overlap between the two circles
+//        if agents[0].isOverlapping(this: agents[1]) {
+//            canvas.drawLine(from: agents[0].centre, to: agents[1].centre)
+//        }
+//        if agents[0].isOverlapping(this: agents[2]) {
+//            canvas.drawLine(from: agents[0].centre, to: agents[2].centre)
+//        }
+//        if agents[0].isOverlapping(this: agents[3]) {
+//            canvas.drawLine(from: agents[0].centre, to: agents[3].centre)
+//        }
+//        if agents[1].isOverlapping(this: agents[2]) {
+//            canvas.drawLine(from: agents[1].centre, to: agents[2].centre)
+//        }
+//        if agents[1].isOverlapping(this: agents[3]) {
+//            canvas.drawLine(from: agents[1].centre, to: agents[3].centre)
+//        }
+//        if agents[2].isOverlapping(this: agents[3]) {
+//            canvas.drawLine(from: agents[2].centre, to: agents[3].centre)
+//        }
+      
+        //Left side (agent checking)
+        for i in 0...agents.count - 2 {
+            
+            //Right side (agent being checked)
+            for j in (i + 1)...agents.count - 1 {
+                
+                canvas.lineColor = Color.init(hue: 255, saturation: 100, brightness: 50, alpha: 2)
+                if agents[i].isOverlapping(this: agents[j]) {
+                    canvas.drawLine(from: agents[i].centre, to: agents[j].centre)
+                }
+            }
         }
-        if agents[0].isOverlapping(this: agents[2]) {
-            canvas.drawLine(from: agents[0].centre, to: agents[2].centre)
-        }
-        if agents[0].isOverlapping(this: agents[3]) {
-            canvas.drawLine(from: agents[0].centre, to: agents[3].centre)
-        }
-        if agents[1].isOverlapping(this: agents[2]) {
-            canvas.drawLine(from: agents[1].centre, to: agents[2].centre)
-        }
-        if agents[1].isOverlapping(this: agents[3]) {
-            canvas.drawLine(from: agents[1].centre, to: agents[3].centre)
-        }
-        if agents[2].isOverlapping(this: agents[3]) {
-            canvas.drawLine(from: agents[2].centre, to: agents[3].centre)
-        }
-        
     }
     
     // Clear the canvas
