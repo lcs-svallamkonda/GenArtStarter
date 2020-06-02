@@ -20,10 +20,10 @@ class Sketch : NSObject {
         canvas.drawShapesWithFill = false
         
         // Create many instances of the Agent structure
-        for _ in 1...50 {
+        for _ in 1...2 {
             
             let anotherAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
-                                     radius: Int.random(in: 10...20),
+                                     radius: Int.random(in: 25...50),
                                      velocity: Vector(x: Double.random(in: -2...2),
                                                       y: Double.random(in: -2...2)),
                                      drawsUpon: canvas)
@@ -42,7 +42,7 @@ class Sketch : NSObject {
         
         // Update the position of the agent
         for agent in agents {
-            agent.update()
+            agent.update(drawingBoundary: false)
         }
         
     }
