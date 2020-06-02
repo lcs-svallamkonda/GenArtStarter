@@ -38,11 +38,16 @@ class Sketch : NSObject {
     func draw() {
        
         // Clear the canvas
-        clearCanvas()
+       // clearCanvas()
         
         // Update the position of the agent
         for agent in agents {
             agent.update(drawingBoundary: false)
+        }
+        
+        //Manually check for overlap between the two circles
+        if agents[0].isOverlapping(this: agents[1]) {
+            canvas.drawLine(from: agents[0].centre, to: agents[1].centre)
         }
         
     }
