@@ -23,7 +23,7 @@ class Sketch : NSObject {
         for _ in 1...50 {
             
             let anotherAgent = Agent(centre: Point(x: canvas.width / 2, y: canvas.height / 2),
-                                     radius: Int.random(in: 25...50),
+                                     radius: Int.random(in: 35...55),
                                      velocity: Vector(x: Double.random(in: -2...2),
                                                       y: Double.random(in: -2...2)),
                                      drawsUpon: canvas)
@@ -38,7 +38,7 @@ class Sketch : NSObject {
     func draw() {
        
         // Clear the canvas
-//        clearCanvas()
+        //clearCanvas()
         
         // Update the position of the agent
         for agent in agents {
@@ -71,10 +71,11 @@ class Sketch : NSObject {
             //Right side (agent being checked)
             for j in (i + 1)...agents.count - 1 {
                 
-                let a = distanceBetween(a: agents[i].centre, b: agents[j].centre)
+//                let a = distanceBetween(a: agents[i].centre, b: agents[j].centre)
 //                print(a)
                 //let a = Int.random(in: 1...400)
-                canvas.lineColor = Color.init(hue: Int(a) + 100, saturation: 100, brightness: 50, alpha: 5)
+                let distance = map(value: Double(distanceBetween(a: agents[i].centre, b: agents[j].centre)), fromLower: 0, fromUpper: 110, toLower: 0, toUpper: 100)
+                canvas.lineColor = Color.init(hue: 210, saturation: 0, brightness: Int(distance), alpha: 3)
                 if agents[i].isOverlapping(this: agents[j]) {
                     canvas.drawLine(from: agents[i].centre, to: agents[j].centre)
                 }
